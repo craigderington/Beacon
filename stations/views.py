@@ -1,6 +1,6 @@
 from django.http import HttpResponse
-from django.shortcuts import redirect, get_object_or_404
-from django.template import Context, loader, TemplateDoesNotExist
+from django.shortcuts import render, redirect, get_object_or_404
+from django.template import context, loader, TemplateDoesNotExist
 from django.template.context import RequestContext
 from .models import RadioStation, Office
 
@@ -8,20 +8,21 @@ from .models import RadioStation, Office
 
 # Create your views here.
 def index(request):
-    search = None
-    if request:
-        stations = RadioStation.objects.all().order_by('radio_station_call_sign')
+    stations = RadioStation.objects.all().order_by('radio_station_call_sign')
 
-        if search:
-            stations = stations.filter(
-                Q(radio_station_call_sign__icontains=search) |
-                Q(radio_station_band__icontains=search) |
-                Q(radio_station_format__icontains=search)
-            ).distinct()
+    """
+    if search:
+        stations = stations.filter(
+            Q(radio_station_call_sign__icontains=search) |
+            Q(radio_station_band__icontains=search) |
+            Q(radio_station_format__icontains=search)
+        ).distinct()
 
-        request.context.update({
-            'stations' : stations,
-        })
+    request.context.update({
+        'stations' : stations,
+    })
+    """
 
-        template = loader.get_template('index.html')
-        return HttpResponse(template.render(request.context))
+    #template = loader.get_template('index.html')
+    #return HttpResponse(template.render(request.context))
+    return render(request, 'index.html', {'stations': stations})
