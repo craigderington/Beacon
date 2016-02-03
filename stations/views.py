@@ -8,8 +8,8 @@ from .models import RadioStation, Office
 
 # Create your views here.
 def index(request):
+    search = None
     if request:
-        context = RequestContext(request)
         stations = RadioStation.objects.all().order_by('radio_station_call_sign')
 
         if search:

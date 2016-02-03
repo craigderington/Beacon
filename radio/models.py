@@ -13,7 +13,7 @@ class Radio(models.Model):
     def __str__(self):
         return self.radio_name + ' ' + self.radio_id
 
-class Channels(models.Model):
+class Channel(models.Model):
     radio_channel = models.ForeignKey(Radio)
     radio_channel_call_sign = models.CharField(max_length=20)
     radio_channel_slogan = models.CharField(max_length=50)
